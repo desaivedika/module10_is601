@@ -1,0 +1,4 @@
+# setuptools is a build-time tool bundled in the python base image.
+# It is not used at runtime by this app, and the site-packages copy is upgraded
+# to >=78.1.1 in the Dockerfile. Reviewed and accepted.
+CVE-2025-47273
