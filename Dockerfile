@@ -13,8 +13,7 @@ RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/* \
 
 # Install Python dependencies first so Docker can cache this layer
 COPY requirements.txt .
-RUN pip install --upgrade pip && pip install -r requirements.txt
-
+RUN pip install --upgrade pip "setuptools>=78.1.1" && pip install -r requirements.txt
 # Copy the application code
 COPY --chown=appuser:appuser app ./app
 COPY --chown=appuser:appuser templates ./templates
