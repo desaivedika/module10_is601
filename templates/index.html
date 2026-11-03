@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FastAPI Calculator</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        input { margin: 5px; padding: 5px; }
+        button { padding: 5px 10px; margin: 2px; }
+        #result { margin-top: 12px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Hello World</h1>
+    <h2>Calculator</h2>
+    <input type="number" id="a" placeholder="First number">
+    <input type="number" id="b" placeholder="Second number"><br>
+    <button onclick="calculate('add')">Add</button>
+    <button onclick="calculate('subtract')">Subtract</button>
+    <button onclick="calculate('multiply')">Multiply</button>
+    <button onclick="calculate('divide')">Divide</button>
+    <div id="result"></div>
+
+    <script>
+        async function calculate(operation) {
+            const a = parseFloat(document.getElementById('a').value);
+            const b = parseFloat(document.getElementById('b').value);
+            const resultEl = document.getElementById('result');
+            try {
+                const response = await fetch('/' + operation, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ a: a, b: b })
+                });
+                const data = await response.json();
+                resultEl.innerText = response.ok
+                    ? 'Calculation Result: ' + data.result
+                    : 'Error: ' + data.detail;
+            } catch (error) {
+                resultEl.innerText = 'Error: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>
